@@ -1,12 +1,13 @@
-import '@babel/polyfill'
-import Vue from 'vue'
-import './plugins/vuetify'
-import App from './app'
-import store from './store'
+import '@babel/polyfill';
+import Vue from 'vue';
+import './plugins/vuetify';
+import App from './App';
+import store from './store/store';
 
-Vue.config.productionTip = false
+
+Vue.config.productionTip = true;
 
 new Vue({
   store,
-  render: h => h(App)
-}).$mount('#app')
+   render: h => h(App)
+}).$mount('#app');
