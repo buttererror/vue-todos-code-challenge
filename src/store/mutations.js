@@ -1,6 +1,11 @@
 import Vue from 'vue';
 
-export const updateTodoList = (state, todo) => {
-   let todoIndex = Object.entries(state.todos).length;
-   Vue.set(state.todos, todoIndex, todo);
+export const updateTodoList = (state, todoText) => {
+   let todoIndex = state.todos.length;
+   let todoItem = {text: todoText, status: "new"};
+   Vue.set(state.todos, todoIndex, todoItem);
+};
+
+export const removeSelectedTodo = (state, key) => {
+   Vue.delete(state.todos, key);
 };

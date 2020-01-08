@@ -4,6 +4,7 @@
       :key="index"
       v-for="(todo, index) in todos"
       :todo="todo"
+      :todo-key="index"
       class="mb-3"
     />
   </div>

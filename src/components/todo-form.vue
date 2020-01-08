@@ -7,8 +7,7 @@
     autofocus
     clearable
     @keyup.enter="addNewTodo"
-  >
-  </v-text-field>
+  />
 </template>
 
 <script>
@@ -24,9 +23,11 @@ export default {
          insertNewTodo: 'updateTodoList'
       }),
       addNewTodo(e) {
-         this.insertNewTodo(e.target.value);
-         console.log(this.todo);
-         this.todo = null;
+         if(e.target.value) {
+            this.insertNewTodo(e.target.value);
+            // console.log(this.todo);
+            this.todo = null;
+         }
       }
    }
 }
