@@ -1,18 +1,21 @@
 <template>
   <v-app>
     <v-toolbar
+      fixed
       app
     >
       <v-toolbar-title v-text="title" />
     </v-toolbar>
     <v-content>
       <v-layout
-        align-center
+        class="mt-5"
+        align-content-start
         fill-height
         justify-center
       >
-        <v-flex xs6>
+        <v-flex xs7>
           <TodoForm />
+          <TodoSummary />
           <TodoList />
         </v-flex>
       </v-layout>
@@ -23,12 +26,14 @@
 <script>
 import TodoForm from '@/components/todo-form'
 import TodoList from '@/components/todo-list'
+import TodoSummary from "@/components/todo-summary";
 
 export default {
   name: 'App',
   components: {
-    TodoForm,
-    TodoList,
+     TodoSummary,
+     TodoForm,
+     TodoList,
   },
   data () {
     return {

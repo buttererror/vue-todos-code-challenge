@@ -16,7 +16,13 @@ import {
   VTextField,
   transitions,
    VAvatar,
-   VChip
+   VChip,
+   VHover,
+   VForm,
+   VCheckbox,
+   VDivider,
+   VProgressCircular,
+   VTextarea
 } from 'vuetify'
 import 'vuetify/src/stylus/app.styl'
 
@@ -34,7 +40,14 @@ Vue.use(Vuetify, {
     VTextField,
     transitions,
      VAvatar,
-     VChip
+     VChip,
+     VHover,
+     VForm,
+     VCheckbox,
+     VDivider,
+     VProgressCircular,
+     VTextarea
+
   },
    iconfont: 'mdi' // 'md' || 'mdi' || 'fa' || 'fa4'
 })
