@@ -1,32 +1,30 @@
 import store from './store/index';
 export default class Todo {
-   constructor(todo = {}, index = null) {
+   constructor(todo , index) {
       this.todo = todo;
-      this.todoKey = index;
+      this.id = index;
       this.todoCopy = JSON.parse(JSON.stringify(this.todo));
-      this.storageKey = "todos_storage";
-
    }
    removeTodo() {
-      store.commit('tasks/updateTodoList', {todo: null, index: this.todoKey.toString()});
+      store.commit('tasks/updateTodoList', {todo: null, index: this.id.toString()});
    }
    updateTodo(todo, props, values) {
       this.todoCopy = todo;
       props.forEach((prop, index) => {
          this.todoCopy[prop] = values[index];
       });
-      store.commit('tasks/updateTodoList', {todo: this.todoCopy, index: this.todoKey.toString()});
+      store.commit('tasks/updateTodoList', {todo: this.todoCopy, index: this.id.toString()});
    }
-   createNew(todo) {
+   static insertTodo(todo) {
       store.commit('tasks/updateTodoList', {todo});
    }
-   fetchTodos() {
-      store.state.tasks.todos = JSON.parse(localStorage.getItem(this.storageKey)) || [];
+   static fetchTodos() {
+      store.state.tasks.todos = JSON.parse(localStorage.getItem("todos_storage")) || [];
    }
-   saveTodos(todos) {
-      localStorage.setItem(this.storageKey, JSON.stringify(todos));
+   static saveTodos(todos) {
+      localStorage.setItem("todos_storage", JSON.stringify(todos));
    }
-   removeAllcompleted(todos) {
+   static removeAllcompleted(todos) {
       store.state.tasks.todos = todos.filter((todo) => !todo.done);
    }
 }

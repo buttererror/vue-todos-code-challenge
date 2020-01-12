@@ -29,18 +29,14 @@
    export default {
       data() {
          return {
-            todoText: null,
-            todoView: null
+            todoText: null
          }
-      },
-      mounted() {
-         this.todoView = new Todo();
       },
       methods: {
          addNewTodo(e) {
             if (e.target.value) {
                let todo = {text: e.target.value, status: "new", done: false};
-               this.todoView.createNew(todo)
+               Todo.insertTodo(todo)
                this.todoText = null;
             }
          }

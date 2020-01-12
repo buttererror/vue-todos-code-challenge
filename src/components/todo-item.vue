@@ -14,7 +14,7 @@
           @keyup.enter="todoView.updateTodo(todo, ['status'], ['new'])"
         />
         <v-checkbox
-                  title="Mark as completed"
+          title="Mark as completed"
           v-else
           v-model="todo.done"
           color="info darken-3"
@@ -33,7 +33,7 @@
 
       <v-scroll-x-transition>
         <v-icon
-                  title="Submit changes"
+          title="Submit changes"
           v-if="todo.status === 'edit'"
           clickable
           color="success"
@@ -43,7 +43,7 @@
         </v-icon>
         <div v-else>
           <v-icon
-                    title="Edit"
+            title="Edit"
             v-if="todo.status !== 'complete'"
             clickable
             color="success"
@@ -53,7 +53,7 @@
             mdi-pencil
           </v-icon>
           <v-icon
-                    title="Remove"
+            title="Remove"
             clickable
             color="error"
             class="pa-1"

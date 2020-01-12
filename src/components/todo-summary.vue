@@ -24,15 +24,15 @@
       <strong class="mx-4 black--text">
         Completed: {{ completedTodos }}
       </strong>
-         <span title="Delete all completed todos">
-                       <v-icon
-                                 v-if="completedTodos"
-                                 @click="todoView.removeAllcompleted(todos)"
-                       >
-              mdi-delete
-         </v-icon>
+      <span title="Delete all completed todos">
+        <v-icon
+          v-if="completedTodos"
+          @click="deleteAllCompleted"
+        >
+          mdi-delete
+        </v-icon>
 
-         </span>
+      </span>
 
       <v-spacer/>
 
@@ -53,14 +53,6 @@
      import Todo from '@/Todo';
    export default {
       name: "TodoSummary",
-      data() {
-         return {
-            todoView: null
-         }
-      },
-      created() {
-          this.todoView = new Todo();
-      },
       computed: {
          ...mapState({
             todos: state => state.tasks.todos
@@ -70,6 +62,11 @@
             completedTodos: 'tasks/completedTodos',
             progress: 'tasks/progress'
          })
+      },
+      methods: {
+         deleteAllCompleted() {
+            Todo.removeAllcompleted(this.todos);
+         }
       }
    }
 </script>

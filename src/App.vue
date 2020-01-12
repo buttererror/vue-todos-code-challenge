@@ -39,13 +39,11 @@ export default {
   },
   data () {
     return {
-      title: 'Vue Todos',
-       todoView: null
+      title: 'Vue Todos'
     }
   },
    created() {
-      this.todoView = new Todo();
-      this.todoView.fetchTodos();
+      Todo.fetchTodos();
    },
    computed: {
       ...mapState({
@@ -55,7 +53,7 @@ export default {
    watch: {
      todos: {
         handler(todos) {
-           this.todoView.saveTodos(todos);
+           Todo.saveTodos(todos);
         },
         deep: true
      }
