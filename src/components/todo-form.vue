@@ -10,7 +10,7 @@
         autofocus
         @keyup.enter="addNewTodo"
       >
-        <template v-slot:label>
+        <template slot="label">
           <v-icon style="vertical-align: middle">mdi-pencil</v-icon>
           What do you<strong> have to do</strong>?
         </template>
@@ -24,22 +24,23 @@
 </template>
 
 <script>
-   import {mapMutations} from 'vuex';
+   import Todo from '@/Todo';
 
    export default {
       data() {
          return {
-            todoText: null
+            todoText: null,
+            todoView: null
          }
       },
+      mounted() {
+         this.todoView = new Todo();
+      },
       methods: {
-         ...mapMutations({
-            insertNewTodo: 'updateTodoList',
-         }),
          addNewTodo(e) {
             if (e.target.value) {
-               let todo = {text: e.target.value, status: "new"};
-               this.insertNewTodo({todo});
+               let todo = {text: e.target.value, status: "new", done: false};
+               this.todoView.createNew(todo)
                this.todoText = null;
             }
          }

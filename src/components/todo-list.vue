@@ -24,7 +24,7 @@
    export default {
       computed: {
          ...mapState({
-            todos: state => state.todos
+            todos: state => state.tasks.todos
          })
       },
       components: {

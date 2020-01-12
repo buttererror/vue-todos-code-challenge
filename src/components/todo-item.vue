@@ -11,16 +11,17 @@
           v-if="todo.status === 'edit'"
           v-model="todo.text"
           autofocus
-          @keyup.enter="finishEditingTodo"
+          @keyup.enter="todoView.updateTodo(todo, ['status'], ['new'])"
         />
         <v-checkbox
+                  title="Mark as completed"
           v-else
-          v-model="done"
+          v-model="todo.done"
           color="info darken-3"
         >
-          <template v-slot:label>
+          <template slot="label">
             <div
-              :class="done && 'grey--text' || 'text--primary'"
+              :class="todo.done && 'grey--text' || 'text--primary'"
               class="ml-3"
               v-text="todo.text"
             />
@@ -32,28 +33,31 @@
 
       <v-scroll-x-transition>
         <v-icon
+                  title="Submit changes"
           v-if="todo.status === 'edit'"
           clickable
           color="success"
-          @click="finishEditingTodo"
+          @click="todoView.updateTodo(todo, ['status'], ['new'])"
         >
           mdi-check
         </v-icon>
         <div v-else>
           <v-icon
+                    title="Edit"
             v-if="todo.status !== 'complete'"
             clickable
             color="success"
             class="pa-1"
-            @click="editSelectedTodo"
+            @click="todoView.updateTodo(todo, ['status'], ['edit'])"
           >
             mdi-pencil
           </v-icon>
           <v-icon
+                    title="Remove"
             clickable
             color="error"
             class="pa-1"
-            @click="removeSelectedTodo"
+            @click="removeTodo"
           >
             close
           </v-icon>
@@ -68,52 +72,36 @@
 
 <script>
    import VueTypes from 'vue-types'
-   import {mapMutations} from 'vuex';
+   import Todo from '@/Todo';
 
    export default {
       data() {
-          return {
-             done: false
-          }
+         return {
+            todoView: null
+         }
       },
       props: {
          todo: VueTypes.object.isRequired,
          todoKey: VueTypes.number.isRequired
       },
-      computed: {
-          todoItem: {
-             get() {
-                return this.todo;
-             },
-             set() {
-             }
-          }
+      created() {
+         this.todoView = new Todo(this.todo, this.todoKey);
       },
       methods: {
-         ...mapMutations({
-            updateTodoItem: 'updateTodoList'
-         }),
-         editSelectedTodo() {
-            this.todoItem.status = "edit";
-            this.updateTodoItem({todo: this.todoItem, index: this.todoKey.toString()});
-         },
-         removeSelectedTodo() {
-            this.updateTodoItem({todo: null, index: this.todoKey.toString()});
-            this.done = false;
-         },
-         finishEditingTodo() {
-            this.todoItem.status = "new";
-         },
+         removeTodo() {
+            this.todoView.removeTodo();
+         }
       },
       watch: {
-         done(done) {
-            if(done) {
-               this.todoItem.status = "complete";
-               this.updateTodoItem({todo: this.todoItem, index: this.todoKey.toString()});
-            }else {
-               this.todoItem.status = "new";
-               this.updateTodoItem({todo: this.todoItem, index: this.todoKey.toString()});
+         'todo.done'(done) {
+            if (done) {
+               this.todoView.updateTodo(this.todo, ["status", "done"], ["complete", done]);
+            } else {
+               this.todoView.updateTodo(this.todo, ["status", "done"], ["new", done]);
             }
+         },
+         'todo.text'(text) {
+            this.todoView.updateTodo(this.todo, ["text"], [text]);
          }
       }
    }
@@ -122,7 +110,7 @@
 <style lang="scss">
      #todo-item {
           .v-input__slot {
-               margin-bottom: 0!important;
+               margin-bottom: 0 !important;
           }
           .v-list__tile__action {
                min-width: 90%;

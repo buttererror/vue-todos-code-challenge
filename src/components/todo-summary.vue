@@ -24,6 +24,15 @@
       <strong class="mx-4 black--text">
         Completed: {{ completedTodos }}
       </strong>
+         <span title="Delete all completed todos">
+                       <v-icon
+                                 v-if="completedTodos"
+                                 @click="todoView.removeAllcompleted(todos)"
+                       >
+              mdi-delete
+         </v-icon>
+
+         </span>
 
       <v-spacer/>
 
@@ -41,16 +50,25 @@
 
 <script>
      import {mapState, mapGetters} from 'vuex';
+     import Todo from '@/Todo';
    export default {
       name: "TodoSummary",
+      data() {
+         return {
+            todoView: null
+         }
+      },
+      created() {
+          this.todoView = new Todo();
+      },
       computed: {
          ...mapState({
-            todos: state => state.todos
+            todos: state => state.tasks.todos
          }),
          ...mapGetters({
-            remainingTodos: 'remainingTodos',
-            completedTodos: 'completedTodos',
-            progress: 'progress'
+            remainingTodos: 'tasks/remainingTodos',
+            completedTodos: 'tasks/completedTodos',
+            progress: 'tasks/progress'
          })
       }
    }

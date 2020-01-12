@@ -27,6 +27,8 @@
 import TodoForm from '@/components/todo-form'
 import TodoList from '@/components/todo-list'
 import TodoSummary from "@/components/todo-summary";
+import {mapState} from 'vuex';
+import Todo from '@/Todo';
 
 export default {
   name: 'App',
@@ -37,8 +39,26 @@ export default {
   },
   data () {
     return {
-      title: 'Vue Todos'
+      title: 'Vue Todos',
+       todoView: null
     }
-  }
+  },
+   created() {
+      this.todoView = new Todo();
+      this.todoView.fetchTodos();
+   },
+   computed: {
+      ...mapState({
+         todos: state => state.tasks.todos
+      })
+   },
+   watch: {
+     todos: {
+        handler(todos) {
+           this.todoView.saveTodos(todos);
+        },
+        deep: true
+     }
+   }
 }
 </script>
