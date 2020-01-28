@@ -43,20 +43,21 @@ export default {
     }
   },
    created() {
-      Todo.fetchTodos();
+     Todo.fetch();
+      // Todo.fetchTodos();
    },
    computed: {
       ...mapState({
          todos: state => state.tasks.todos
       })
    },
-   watch: {
-     todos: {
-        handler(todos) {
-           Todo.saveTodos(todos);
-        },
-        deep: true
-     }
-   }
+   // watch: {
+   //   todos: {
+   //      handler(todos) {
+   //         Todo.saveTodos(todos);
+   //      },
+   //      deep: true
+   //   }
+   // }
 }
 </script>

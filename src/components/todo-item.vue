@@ -1,17 +1,17 @@
 <template lang="html">
   <div id="todo-item">
     <v-divider
-      v-if="todoKey !== 0"
-      :key="`${todoKey}-divider`"
+      v-if="index !== 0"
+      :key="`${index}-divider`"
     />
-    <v-list-tile :key="`${todoKey}-${todo.text}`">
+    <v-list-tile :key="`${index}-${todo.text}`">
       <v-list-tile-action>
         <v-text-field
           solo
           v-if="todo.status === 'edit'"
           v-model="todo.text"
           autofocus
-          @keyup.enter="todoView.updateTodo(todo, ['status'], ['new'])"
+          @keyup.enter="todo.status = 'new'"
         />
         <v-checkbox
           title="Mark as completed"
@@ -37,7 +37,7 @@
           v-if="todo.status === 'edit'"
           clickable
           color="success"
-          @click="todoView.updateTodo(todo, ['status'], ['new'])"
+          @click="todo.status = 'new'"
         >
           mdi-check
         </v-icon>
@@ -48,7 +48,7 @@
             clickable
             color="success"
             class="pa-1"
-            @click="todoView.updateTodo(todo, ['status'], ['edit'])"
+            @click="todo.status = 'edit'"
           >
             mdi-pencil
           </v-icon>
@@ -77,31 +77,39 @@
    export default {
       data() {
          return {
-            todoView: null
+            todoView: null,
+            todo: null
          }
       },
       props: {
-         todo: VueTypes.object.isRequired,
-         todoKey: VueTypes.number.isRequired
+         index: VueTypes.number.isRequired,
+         // todo: VueTypes.object.isRequired,
+         todoId: VueTypes.number.isRequired
       },
       created() {
-         this.todoView = new Todo(this.todo, this.todoKey);
+         this.todo = Todo.find(this.todoId);
+         // this.todoView = new Todo(this.todo, this.todoKey);
       },
       methods: {
          removeTodo() {
-            this.todoView.removeTodo();
+            this.todo.remove();
          }
       },
       watch: {
          'todo.done'(done) {
             if (done) {
-               this.todoView.updateTodo(this.todo, ["status", "done"], ["complete", done]);
+               this.todo.status = "complete";
+               this.todo.save();
             } else {
-               this.todoView.updateTodo(this.todo, ["status", "done"], ["new", done]);
+               this.todo.status = "new";
+               this.todo.save();
             }
          },
-         'todo.text'(text) {
-            this.todoView.updateTodo(this.todo, ["text"], [text]);
+         'todo.text'() {
+            this.todo.save();
+         },
+         todoId() {
+            this.todo = Todo.find(this.todoId);
          }
       }
    }

@@ -9,8 +9,8 @@
       <TodoItem
         :key="index"
         v-for="(todo, index) in todos"
-        :todo="todo"
-        :todo-key="index"
+        :index="index"
+        :todo-id="todo.id"
       />
 
     </v-slide-y-transition>
