@@ -49,14 +49,15 @@
 </template>
 
 <script>
-     import {mapState, mapGetters} from 'vuex';
+     import {mapGetters} from 'vuex';
      import Todo from '@/Todo';
+     import VueTypes from "vue-types";
    export default {
       name: "TodoSummary",
+      props: {
+         todos: VueTypes.array.isRequired
+      },
       computed: {
-         ...mapState({
-            todos: state => state.tasks.todos
-         }),
          ...mapGetters({
             remainingTodos: 'tasks/remainingTodos',
             completedTodos: 'tasks/completedTodos',
@@ -65,7 +66,7 @@
       },
       methods: {
          deleteAllCompleted() {
-            Todo.removeAllcompleted(this.todos);
+            Todo.removeCompleted();
          }
       }
    }

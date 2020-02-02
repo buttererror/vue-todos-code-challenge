@@ -15,8 +15,8 @@
       >
         <v-flex xs7>
           <TodoForm />
-          <TodoSummary />
-          <TodoList />
+          <TodoSummary :todos="todos"/>
+          <TodoList :todos="todos"/>
         </v-flex>
       </v-layout>
     </v-content>
@@ -27,7 +27,6 @@
 import TodoForm from '@/components/todo-form'
 import TodoList from '@/components/todo-list'
 import TodoSummary from "@/components/todo-summary";
-import {mapState} from 'vuex';
 import Todo from '@/Todo';
 
 export default {
@@ -39,25 +38,12 @@ export default {
   },
   data () {
     return {
-      title: 'Vue Todos'
+      title: 'Vue Todos',
+       todos: null
     }
   },
    created() {
-     Todo.fetch();
-      // Todo.fetchTodos();
-   },
-   computed: {
-      ...mapState({
-         todos: state => state.tasks.todos
-      })
-   },
-   // watch: {
-   //   todos: {
-   //      handler(todos) {
-   //         Todo.saveTodos(todos);
-   //      },
-   //      deep: true
-   //   }
-   // }
+      this.todos = Todo.fetch();
+   }
 }
 </script>

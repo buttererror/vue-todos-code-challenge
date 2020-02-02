@@ -77,18 +77,15 @@
    export default {
       data() {
          return {
-            todoView: null,
             todo: null
          }
       },
       props: {
          index: VueTypes.number.isRequired,
-         // todo: VueTypes.object.isRequired,
          todoId: VueTypes.number.isRequired
       },
       created() {
          this.todo = Todo.find(this.todoId);
-         // this.todoView = new Todo(this.todo, this.todoKey);
       },
       methods: {
          removeTodo() {

@@ -40,14 +40,29 @@ export default class Todo {
       localStorage.setItem('todos', JSON.stringify(store.state.tasks.todos));
    }
    remove() {
-      console.log(this.todoIndex)
       store.state.tasks.todos.splice(this.todoIndex, 1);
    }
    static find(id) {
-      return new Todo(id)
+      let todo = new Todo(id);
+      store.state.tasks.todos.forEach((item, index) => {
+         if(item.id == id) {
+            todo.id = id;
+            todo.text = item.text;
+            todo.done = item.done;
+            todo.status = item.status;
+            todo.todoIndex = index;
+         }
+      });
+      return todo;
    }
    static fetch() {
-      store.state.tasks.todos = JSON.parse(localStorage.getItem('todos'));
+      return store.state.tasks.todos = JSON.parse(localStorage.getItem('todos'));
    }
-
+   static removeCompleted() {
+      store.state.tasks.todos.forEach((todo, index) => {
+         if(todo.done) {
+            store.state.tasks.todos.splice(index, 1);
+         }
+      });
+   }
 }

@@ -41,8 +41,6 @@
                this.todo = new Todo();
                this.todo.text = this.todoText;
                this.todo.save();
-               // let todo = {text: e.target.value, status: "new", done: false};
-               // Todo.insertTodo(todo)
                this.todoText = null;
             }
          }
