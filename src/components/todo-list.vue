@@ -9,8 +9,8 @@
       <TodoItem
         :key="index"
         v-for="(todo, index) in todos"
-        :todo="todo"
-        :todo-key="index"
+        :index="index"
+        :todo-id="todo.id"
       />
 
     </v-slide-y-transition>
@@ -19,16 +19,14 @@
 
 <script>
    import TodoItem from '@/components/todo-item';
-   import {mapState} from 'vuex';
+   import VueTypes from 'vue-types'
 
    export default {
-      computed: {
-         ...mapState({
-            todos: state => state.tasks.todos
-         })
-      },
       components: {
          TodoItem,
+      },
+      props: {
+         todos: VueTypes.array.isRequired
       }
    }
 </script>
