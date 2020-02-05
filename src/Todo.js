@@ -56,7 +56,7 @@ export default class Todo {
       return todo;
    }
    static fetch() {
-      return store.state.tasks.todos = JSON.parse(localStorage.getItem('todos'));
+      return store.state.tasks.todos = JSON.parse(localStorage.getItem('todos')) ? JSON.parse(localStorage.getItem('todos')) : [];
    }
    static removeCompleted() {
       store.state.tasks.todos.forEach((todo, index) => {

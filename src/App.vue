@@ -39,7 +39,7 @@ export default {
   data () {
     return {
       title: 'Vue Todos',
-       todos: null
+       todos: []
     }
   },
    created() {
